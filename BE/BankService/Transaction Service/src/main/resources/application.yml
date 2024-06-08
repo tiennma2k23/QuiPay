@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: transaction-service
+    bad_request: 400
+    conflict: 409
+    ok: 200
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/transaction_service
+    username: root
+    password: "05062004"
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+server:
+  port: 8084
