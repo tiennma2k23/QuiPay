@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		777427902C17383F00ACD181 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774278F2C17383F00ACD181 /* DataModel.swift */; };
+		777427922C17388200ACD181 /* TransSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777427912C17388200ACD181 /* TransSampleData.swift */; };
+		777427942C1738EE00ACD181 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777427932C1738EE00ACD181 /* TransactionView.swift */; };
+		777427962C1764AB00ACD181 /* TradingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777427952C1764AB00ACD181 /* TradingView.swift */; };
+		777427982C17662D00ACD181 /* AddWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777427972C17662D00ACD181 /* AddWalletView.swift */; };
+		7774279A2C17667300ACD181 /* WalletsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777427992C17667300ACD181 /* WalletsView.swift */; };
+		7774279C2C1766AA00ACD181 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774279B2C1766AA00ACD181 /* ProfileView.swift */; };
 		77BF18292C0988DF00B4F107 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77BF18212C09884500B4F107 /* Roboto-BoldItalic.ttf */; };
 		F2135DF824B28561006037D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2135DF724B28561006037D5 /* AppDelegate.swift */; };
 		F2135DFA24B28561006037D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2135DF924B28561006037D5 /* SceneDelegate.swift */; };
@@ -18,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7774278F2C17383F00ACD181 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		777427912C17388200ACD181 /* TransSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransSampleData.swift; sourceTree = "<group>"; };
+		777427932C1738EE00ACD181 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
+		777427952C1764AB00ACD181 /* TradingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingView.swift; sourceTree = "<group>"; };
+		777427972C17662D00ACD181 /* AddWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletView.swift; sourceTree = "<group>"; };
+		777427992C17667300ACD181 /* WalletsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsView.swift; sourceTree = "<group>"; };
+		7774279B2C1766AA00ACD181 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		77BF181C2C09884500B4F107 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		77BF181D2C09884500B4F107 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		77BF181E2C09884500B4F107 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -100,8 +114,15 @@
 			children = (
 				77BF18282C09888000B4F107 /* font */,
 				F2135DF724B28561006037D5 /* AppDelegate.swift */,
+				7774278F2C17383F00ACD181 /* DataModel.swift */,
+				777427912C17388200ACD181 /* TransSampleData.swift */,
 				F2135DF924B28561006037D5 /* SceneDelegate.swift */,
+				777427932C1738EE00ACD181 /* TransactionView.swift */,
 				F2135DFB24B28561006037D5 /* ContentView.swift */,
+				777427972C17662D00ACD181 /* AddWalletView.swift */,
+				777427992C17667300ACD181 /* WalletsView.swift */,
+				7774279B2C1766AA00ACD181 /* ProfileView.swift */,
+				777427952C1764AB00ACD181 /* TradingView.swift */,
 				F218A38124B3F3540024036A /* HomeScreen.swift */,
 				F2135DFD24B28566006037D5 /* Assets.xcassets */,
 				F2135E0224B28566006037D5 /* LaunchScreen.storyboard */,
@@ -192,10 +213,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				777427982C17662D00ACD181 /* AddWalletView.swift in Sources */,
+				777427962C1764AB00ACD181 /* TradingView.swift in Sources */,
+				777427902C17383F00ACD181 /* DataModel.swift in Sources */,
 				F218A38224B3F3540024036A /* HomeScreen.swift in Sources */,
 				F2135DF824B28561006037D5 /* AppDelegate.swift in Sources */,
 				F2135DFA24B28561006037D5 /* SceneDelegate.swift in Sources */,
+				777427922C17388200ACD181 /* TransSampleData.swift in Sources */,
+				777427942C1738EE00ACD181 /* TransactionView.swift in Sources */,
 				F2135DFC24B28561006037D5 /* ContentView.swift in Sources */,
+				7774279C2C1766AA00ACD181 /* ProfileView.swift in Sources */,
+				7774279A2C17667300ACD181 /* WalletsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

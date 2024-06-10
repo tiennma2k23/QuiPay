@@ -20,6 +20,9 @@ public class WalletRequest {
     @NotBlank(message = "{iban.notblank}")
     private String iban;
 
+    @NotBlank(message = "{bạnkId.notblank}")
+    private int bankId;
+
     @Size(min = 3, max = 50, message = "{name.size}")
     @NotBlank(message = "{name.notblank}")
     private String name;

@@ -1,5 +1,6 @@
 package org.p2p.solanaj.Service;
 
+import org.bitcoinj.core.Base58;
 import org.p2p.solanaj.core.Account;
 import org.p2p.solanaj.core.PublicKey;
 import org.p2p.solanaj.core.Transaction;
@@ -9,6 +10,8 @@ import org.p2p.solanaj.rpc.Cluster;
 import org.p2p.solanaj.rpc.RpcClient;
 import org.p2p.solanaj.rpc.RpcException;
 import org.p2p.solanaj.rpc.types.ConfirmedTransaction;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +31,12 @@ public class WalletService {
         Account account = new Account();
         walletStore.put(account.getPublicKey().toBase58(), account);
         return account;
+    }
+
+    public Account addAccount(String privateKey, String publicKey){
+            Account account = new Account(Base58.decode(privateKey));
+            walletStore.put(publicKey, account);
+            return account;
     }
 
     public Account getAccount(String publicKey) {

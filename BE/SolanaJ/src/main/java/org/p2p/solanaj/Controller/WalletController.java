@@ -6,9 +6,8 @@ import org.p2p.solanaj.core.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/solana/wallet")
@@ -26,5 +25,10 @@ public class WalletController {
     @GetMapping("/all")
     public Map<String, Account> getAllAccounts() {
         return walletService.getAllAccounts();
+    }
+
+    @PostMapping("/add_accounts")
+    public String addAccount(@RequestParam String publicKey, @RequestParam String privateKey) {
+        return String.valueOf(walletService.addAccount(privateKey,publicKey));
     }
 }

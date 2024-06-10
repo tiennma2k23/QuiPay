@@ -71,7 +71,7 @@ struct HomeScreen: View {
                         .fontWeight(.semibold)
                         .font(Font.custom("Avenir Next", size: 19))
                     
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                    Button(action: {}) {
                         Image("logout-icon")
                             .renderingMode(.original)
                             .resizable()
@@ -84,7 +84,7 @@ struct HomeScreen: View {
                     .offset(y: 90)
                     
                     Text("Version 2.1.0")
-                    .offset(y: 140)
+                        .offset(y: 140)
                 }
                 .padding(.horizontal, 30)
                 Spacer()
@@ -171,6 +171,7 @@ struct HomeScreen: View {
                     }
                     .padding(0)
                     .frame(maxWidth: .infinity, alignment: .top)
+
                     VStack(alignment: .center, spacing: 6) {
                         Image("Withdraw")
                           .frame(width: 24, height: 24)
@@ -191,35 +192,97 @@ struct HomeScreen: View {
                 .cornerRadius(10)
               
     
-                VStack(alignment: .leading, spacing: 24) {
-                    
-
-                    HStack {
-                        ForEach(servicesSection) { item in
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                                servicesView(services: item)
+                // Services Section
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    ServiceIcon(imageName: "globe", text: "Internet")
+                                    ServiceIcon(imageName: "drop", text: "Water")
+                                    ServiceIcon(imageName: "bolt", text: "Electricity")
+                                    ServiceIcon(imageName: "tv", text: "TV Cable")
+                                }
+                                .padding(.top)
+                                
+                                HStack {
+                                    ServiceIcon(imageName: "car", text: "Vehicle")
+                                    ServiceIcon(imageName: "house", text: "Rent Bill")
+                                    ServiceIcon(imageName: "chart.bar", text: "Invest")
+                                    ServiceIcon(imageName: "ellipsis", text: "More")
+                                }
                             }
-                        }
-                    }
-
-
-                    HStack {
-                          ForEach(servicesSecondRow) { item in
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                                servicesView(services: item)
-                            }
-                        }
-                    }
-                }
-                .padding(16)
+                            .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(10)
-                HStack(alignment: .top, spacing: 8) {
-                    Image("banner")
-                        .resizable()
-                        .frame(width: 335, height: 124)
-                        .cornerRadius(10)                }
-                .padding(0)
+                // Special Deal Section
+                            VStack(alignment: .leading) {
+                                Text("50% OFF")
+                                    .font(.headline)
+                                    .bold()
+                                Text("Summer special deal")
+                                    .font(.subheadline)
+                                Text("Get discount for every transaction")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                            .background(Color.pink.opacity(0.2))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                            .padding(.vertical)
+                            
+                            // Recent Transactions Section
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("Recent Transaction")
+                                        .font(.headline)
+                                    Spacer()
+                                    Text("See All")
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.horizontal)
+                                
+                                HStack {
+                                    Image(systemName: "drop.fill")
+                                    VStack(alignment: .leading) {
+                                        Text("Water")
+                                            .font(.subheadline)
+                                        Text("February 24, 2022")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                    Text("240.00")
+                                        .font(.subheadline)
+                                }.padding()
+                                HStack {
+                                    Image(systemName: "drop.fill")
+                                    VStack(alignment: .leading) {
+                                        Text("Water")
+                                            .font(.subheadline)
+                                        Text("February 24, 2022")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                    Text("240.00")
+                                        .font(.subheadline)
+                                }
+                                .padding()
+                            }
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                            
+                            Spacer()
+                // Bottom Navigation
+                            HStack {
+                                NavigationIcon(imageName: "house.fill", text: "Dashboard")
+                                NavigationIcon(imageName: "chart.line.uptrend.xyaxis", text: "Trading")
+                                NavigationIcon(imageName: "plus.circle", text: "Add wallet")
+                                NavigationIcon(imageName: "wallet.pass", text: "Wallets")
+                                NavigationIcon(imageName: "person.circle", text: "My profile")
+                            }
+                            .padding()
+                            .background(Color.gray.opacity(0.1))
 
 
             }
@@ -249,6 +312,37 @@ struct HomeScreen: View {
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         HomeScreen()
+    }
+}
+struct ServiceIcon: View {
+    var imageName: String
+    var text: String
+    
+    var body: some View {
+        VStack {
+            Image(systemName: imageName)
+                .resizable()
+                .frame(width: 40, height: 40)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(10)
+            Text(text)
+                .font(.caption)
+                .padding(.top, 5)
+        }
+    }
+}
+struct NavigationIcon: View {
+    var imageName: String
+    var text: String
+    
+    var body: some View {
+        VStack {
+            Image(systemName: imageName)
+            Text(text)
+                .font(.caption)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 

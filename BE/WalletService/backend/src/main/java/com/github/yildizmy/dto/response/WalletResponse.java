@@ -15,4 +15,5 @@ public class WalletResponse {
     private String name;
     private BigDecimal balance;
     private UserResponse user;
+    private int bankId;
 }
