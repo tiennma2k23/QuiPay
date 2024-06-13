@@ -1,118 +1,161 @@
 import SwiftUI
+import Charts
 
 struct TradingView: View {
-    @State private var selectedWallet: WalletType = .bitcoin
-    @State private var transactions = sampleTransactions
-    @State private var selectedTab: Int = 0
-
-    var totalBalance: Double {
-        transactions.reduce(0) { $0 + ($1.isIncome ? $1.amount : -$1.amount) }
-    }
-
-    var filteredTransactions: [Transaction] {
-        transactions.filter { $0.wallet == selectedWallet }
-    }
+    @State private var price: Double = 0.0
+    @State private var priceChange: Double = 0.0
+    @State private var isPositive: Bool = true
+    @State private var priceData: [PricePoint] = []
+    @State private var selectedInterval: TimeInterval = .oneMinute
+    let cryptoService = CryptoService()
 
     var body: some View {
         NavigationView {
             VStack {
-                // Header
                 HStack {
-                    Text(selectedWallet.rawValue)
+                    Text("Bitcoin (BTC)")
                         .font(.title)
+                        .padding()
                     Spacer()
-                    Image(systemName: "calendar")
+                    Button(action: {
+                        // Action for Exchange button
+                    }) {
+                        Text("Exchange")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding()
                 }
-                .padding()
-
-                // Total Balance
-                Text("$\(totalBalance, specifier: "%.2f")")
+                
+                Text("U\(price, specifier: "%.2f")")
                     .font(.largeTitle)
                     .padding()
-
-                // Filter Tabs
-                Picker("Wallet", selection: $selectedWallet) {
-                    ForEach(WalletType.allCases, id: \.self) { wallet in
-                        Text(wallet.rawValue).tag(wallet)
+                
+                Text("\(isPositive ? "+" : "") \(priceChange, specifier: "%.3f") (\(priceChange / price * 100, specifier: "%.2f")%)")
+                    .foregroundColor(isPositive ? .green : .red)
+                    .padding()
+                
+                Picker("Interval", selection: $selectedInterval) {
+                    ForEach(TimeInterval.allCases, id: \.self) { interval in
+                        Text(interval.displayName).tag(interval)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-
-                // Transaction List
-                List(filteredTransactions) { transaction in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(transaction.type.rawValue)
-                            Text(transaction.wallet.rawValue)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Text(transaction.isIncome ? "+ \(transaction.amount, specifier: "%.4f") \(transaction.currency)" : "- \(transaction.amount, specifier: "%.2f") \(transaction.currency)")
-                            .foregroundColor(transaction.isIncome ? .green : .red)
-                    }
+                
+                if !priceData.isEmpty {
+                    LineChartView(priceData: priceData)
+                        .frame(height: 300)
+                        .padding()
+                } else {
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(height: 300)
+                        .padding()
                 }
-
-                Spacer()
-
-                // Tab Bar
+                
                 HStack {
-                    Button(action: { self.selectedTab = 0 }) {
-                        VStack {
-                            Image(systemName: "wallet.pass")
-                            Text("Add wallet")
-                        }
+                    Button(action: {
+                        // Action for Buy button
+                    }) {
+                        Text("BUY")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(self.selectedTab == 0 ? Color.blue : Color.clear)
-                    .foregroundColor(self.selectedTab == 0 ? .white : .blue)
-                    .cornerRadius(10)
-
-                    Button(action: { self.selectedTab = 1 }) {
-                        VStack {
-                            Image(systemName: "bitcoinsign.circle")
-                            Text("Bitcoin")
-                        }
+                    
+                    Button(action: {
+                        // Action for Sell button
+                    }) {
+                        Text("SELL")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(self.selectedTab == 1 ? Color.blue : Color.clear)
-                    .foregroundColor(self.selectedTab == 1 ? .white : .blue)
-                    .cornerRadius(10)
-
-                    Button(action: { self.selectedTab = 2 }) {
-                        VStack {
-                            Image(systemName: "creditcard")
-                            Text("Mastercard")
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(self.selectedTab == 2 ? Color.blue : Color.clear)
-                    .foregroundColor(self.selectedTab == 2 ? .white : .blue)
-                    .cornerRadius(10)
-
-                    // Add more buttons as needed...
                 }
                 .padding()
-                .background(Color(UIColor.systemGray6))
             }
-            .navigationBarTitle("Dashboard", displayMode: .inline)
+            .navigationBarHidden(true)
         }
-        HStack {
-            NavigationIcon(imageName: "house.fill", text: "Dashboard")
-            NavigationIcon(imageName: "chart.line.uptrend.xyaxis", text: "Trading")
-            NavigationIcon(imageName: "plus.circle", text: "Add wallet")
-            NavigationIcon(imageName: "wallet.pass", text: "Wallets")
-            NavigationIcon(imageName: "person.circle", text: "My profile")
+        .onAppear {
+            cryptoService.startFetchingRealTimePrice()
+            cryptoService.priceUpdateHandler = { newPrice in
+                if let newPrice = newPrice {
+                    self.priceChange = newPrice - self.price
+                    self.isPositive = self.priceChange >= 0
+                    self.price = newPrice
+                }
+            }
+            fetchData()
         }
-        .padding()
-        .background(Color.gray.opacity(0.1))
+        .onDisappear {
+            cryptoService.stopFetchingRealTimePrice()
+        }
+        .onChange(of: selectedInterval) { _ in
+            fetchData()
+        }
+    }
+    
+    func fetchData() {
+        cryptoService.fetchBitcoinPriceHistory(interval: selectedInterval) { newPriceData in
+            self.priceData = newPriceData
+        }
     }
 }
 
+struct LineChartView: View {
+    var priceData: [PricePoint]
+
+    var body: some View {
+        Chart {
+            ForEach(priceData) { point in
+                LineMark(
+                    x: .value("Time", point.time),
+                    y: .value("Price", point.price)
+                )
+            }
+        }
+    }
+}
+
+struct PricePoint: Identifiable {
+    var id = UUID()
+    var time: Date
+    var price: Double
+}
+
+extension TimeInterval: Identifiable, CaseIterable {
+    public var id: Self { self }
+    
+    public static var allCases: [TimeInterval] {
+        return [.oneSecond, .oneMinute, .fiveMinutes, .oneHour, .twelveHours, .twentyFourHours]
+    }
+
+    public var displayName: String {
+        switch self {
+        case .oneSecond: return "1s"
+        case .oneMinute: return "1m"
+        case .fiveMinutes: return "5m"
+        case .oneHour: return "1h"
+        case .twelveHours: return "12h"
+        case .twentyFourHours: return "24h"
+        default: return "\(self)"
+        }
+    }
+
+    public static var oneSecond: TimeInterval { return 1 }
+    public static var oneMinute: TimeInterval { return 60 }
+    public static var fiveMinutes: TimeInterval { return 5 * 60 }
+    public static var oneHour: TimeInterval { return 60 * 60 }
+    public static var twelveHours: TimeInterval { return 12 * 60 * 60 }
+    public static var twentyFourHours: TimeInterval { return 24 * 60 * 60 }
+}
 
 struct TradingView_Previews: PreviewProvider {
     static var previews: some View {

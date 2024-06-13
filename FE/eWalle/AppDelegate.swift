@@ -2,9 +2,7 @@
 //  AppDelegate.swift
 //  eWalle
 //
-//  Created by MR.Robot 💀 on 05/07/2020.
-//  Copyright © 2020 Joselson Dias. All rights reserved.
-//
+
 
 import UIKit
 
