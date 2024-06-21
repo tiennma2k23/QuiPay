@@ -25,6 +25,8 @@
 		77B305312C194414003E7C82 /* SellCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305302C194414003E7C82 /* SellCoinView.swift */; };
 		77B305332C19A8CC003E7C82 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305322C19A8CB003E7C82 /* LoginView.swift */; };
 		77B305352C1A25C3003E7C82 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305342C1A25C3003E7C82 /* HomeScreen.swift */; };
+		77B305372C1B934A003E7C82 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305362C1B934A003E7C82 /* LocalStorage.swift */; };
+		77B3053B2C1C8529003E7C82 /* SuccessPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3053A2C1C8529003E7C82 /* SuccessPaymentView.swift */; };
 		F2135DF824B28561006037D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2135DF724B28561006037D5 /* AppDelegate.swift */; };
 		F2135DFA24B28561006037D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2135DF924B28561006037D5 /* SceneDelegate.swift */; };
 		F2135DFE24B28566006037D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2135DFD24B28566006037D5 /* Assets.xcassets */; };
@@ -51,6 +53,8 @@
 		77B305302C194414003E7C82 /* SellCoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellCoinView.swift; sourceTree = "<group>"; };
 		77B305322C19A8CB003E7C82 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = eWalle/LoginView.swift; sourceTree = SOURCE_ROOT; };
 		77B305342C1A25C3003E7C82 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeScreen.swift; path = eWalle/HomeScreen.swift; sourceTree = SOURCE_ROOT; };
+		77B305362C1B934A003E7C82 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		77B3053A2C1C8529003E7C82 /* SuccessPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPaymentView.swift; sourceTree = "<group>"; };
 		F2135DF424B28561006037D5 /* eWalle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eWalle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2135DF724B28561006037D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2135DF924B28561006037D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				77B305242C1921BC003E7C82 /* BuyView.swift */,
 				77B305262C192204003E7C82 /* PayView.swift */,
 				77B305282C192761003E7C82 /* PaymentConfirmationView.swift */,
+				77B305362C1B934A003E7C82 /* LocalStorage.swift */,
+				77B3053A2C1C8529003E7C82 /* SuccessPaymentView.swift */,
 				77B305322C19A8CB003E7C82 /* LoginView.swift */,
 				77B3052A2C19351D003E7C82 /* CryptoService.swift */,
 				77B3052E2C193F3C003E7C82 /* BuyCoinView.swift */,
@@ -210,6 +216,7 @@
 				77B305252C1921BC003E7C82 /* BuyView.swift in Sources */,
 				77B3051D2C190E88003E7C82 /* CryptoWalletView.swift in Sources */,
 				77B305272C192204003E7C82 /* PayView.swift in Sources */,
+				77B3053B2C1C8529003E7C82 /* SuccessPaymentView.swift in Sources */,
 				77B3052B2C19351D003E7C82 /* CryptoService.swift in Sources */,
 				77B305112C190773003E7C82 /* DataModel.swift in Sources */,
 				77B305312C194414003E7C82 /* SellCoinView.swift in Sources */,
@@ -217,6 +224,7 @@
 				77B305172C1907F3003E7C82 /* ContentView.swift in Sources */,
 				F2135DF824B28561006037D5 /* AppDelegate.swift in Sources */,
 				F2135DFA24B28561006037D5 /* SceneDelegate.swift in Sources */,
+				77B305372C1B934A003E7C82 /* LocalStorage.swift in Sources */,
 				77B305292C192761003E7C82 /* PaymentConfirmationView.swift in Sources */,
 				77B305132C1907BC003E7C82 /* TransSampleData.swift in Sources */,
 				77B3052F2C193F3C003E7C82 /* BuyCoinView.swift in Sources */,
@@ -292,7 +300,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -346,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

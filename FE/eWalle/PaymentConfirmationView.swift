@@ -1,14 +1,15 @@
 import SwiftUI
 
 struct PaymentConfirmationView: View {
-    @State private var receiver = "Nguyễn Văn A"
-    @State private var phoneNumber = "093 4465 088"
+    @State private var receiver = ""
+    @State private var phoneNumber = ""
     @State private var message = "Tớ gửi tiền nhé"
-    @State private var amountOfMoney = "100.000"
+    @State private var amountOfMoney = "100000"
     @State private var discountCode = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
     @State private var showingPinEntry = false
+    @State private var showSuccessSendView = false
     
     var body: some View {
         NavigationView {
@@ -122,7 +123,10 @@ struct PaymentConfirmationView: View {
                 Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
             .sheet(isPresented: $showingPinEntry) {
-                PinEntryView(showingPinEntry: $showingPinEntry)
+                PinEntryView(showingPinEntry: $showingPinEntry, showSuccessSendView: $showSuccessSendView)
+            }
+            .fullScreenCover(isPresented: $showSuccessSendView) {
+                SuccessSendView(receiver: receiver, phoneNumber: phoneNumber, message: message, totalMoney: amountOfMoney, showSuccessSendView: $showSuccessSendView)
             }
             .onTapGesture {
                 dismissKeyboard()
@@ -138,17 +142,51 @@ struct PaymentConfirmationView: View {
     }
     
     func validateInput() -> Bool {
-        if phoneNumber.isEmpty || !phoneNumber.matches(regex: "^[0-9]{3} [0-9]{4} [0-9]{3}$") || !phoneNumber.matches(regex: "^[0-9]{10}$"){
+        // Validate phone number format
+        if phoneNumber.isEmpty {
             alertMessage = "Invalid phone number."
+            showingAlert = true
             return false
         }
-        if amountOfMoney.isEmpty || Double(amountOfMoney) == nil {
-            alertMessage = "Invalid amount of money."
+        
+        // Call API to find account
+        let apiUrl = "http://localhost:8484/mywallet/findaccount?phoneNumber=\(phoneNumber)"
+        guard let url = URL(string: apiUrl) else {
+            alertMessage = "Invalid API URL."
+            showingAlert = true
             return false
         }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                alertMessage = "Network error: \(error?.localizedDescription ?? "Unknown error")"
+                showingAlert = true
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let user = try decoder.decode(User.self, from: data)
+                DispatchQueue.main.async {
+                    // Update receiver if account found
+                    receiver = user.customerName
+                }
+            } catch {
+                alertMessage = "Error decoding response: \(error.localizedDescription)"
+                showingAlert = true
+            }
+        }
+        
+        task.resume()
+        
+        // Always return true immediately; the actual validation result is handled asynchronously
         return true
     }
-
+    
     func dismissKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
@@ -182,6 +220,7 @@ struct DiscountCodeView: View {
 
 struct PinEntryView: View {
     @Binding var showingPinEntry: Bool
+    @Binding var showSuccessSendView: Bool
     @State private var pin = ""
 
     var body: some View {
@@ -212,6 +251,7 @@ struct PinEntryView: View {
                         Button("Confirm") {
                             // Handle PIN confirmation
                             showingPinEntry = false
+                            showSuccessSendView = true
                         }
                         .padding()
                     }
@@ -233,15 +273,93 @@ struct PinEntryView: View {
     }
 }
 
-extension String {
-    func matches(regex: String) -> Bool {
-        return range(of: regex, options: .regularExpression) != nil
+struct SuccessSendView: View {
+    let receiver: String
+    let phoneNumber: String
+    let message: String
+    let totalMoney: String
+    @Binding var showSuccessSendView: Bool
+    
+    var body: some View {
+        VStack {
+            // Green Success Header
+            VStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
+                Text("Success")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(.bottom, 20)
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.green)
+            
+            // Details Section
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Receiver")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(receiver)
+                }
+                HStack {
+                    Text("Phone number")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(phoneNumber)
+                }
+                HStack {
+                    Text("Message")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(message)
+                }
+                HStack {
+                    Text("Total Money")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(totalMoney)
+                }
+            }
+            .padding()
+            
+            Spacer()
+            
+            // Buttons
+            HStack {
+                Button(action: {
+                    // Handle new transaction
+                    showSuccessSendView = false
+                }) {
+                    Text("New transaction")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                NavigationLink(destination: HomeScreen()) {
+                    Text("Homepage")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+            }
+        }
+        .navigationBarHidden(true)
     }
 }
+
 
 struct PaymentConfirmationView_Previews: PreviewProvider {
     static var previews: some View {
         PaymentConfirmationView()
     }
 }
-

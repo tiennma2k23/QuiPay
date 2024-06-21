@@ -101,9 +101,14 @@ struct LoginView: View {
             guard let httpResponse = response as? HTTPURLResponse else { return }
             
             if httpResponse.statusCode == 200 {
-                DispatchQueue.main.async {
-                    self.isLoggedIn = true
-                    self.loginMessage = "Login successful!"
+                if let data = data, let uuid = String(data: data, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        self.isLoggedIn = true
+                        self.loginMessage = "Login successful!"
+                        // Lưu trữ UUID và số điện thoại vào UserDefaults
+                        UserDefaults.standard.set(uuid, forKey: "uuid")
+                        UserDefaults.standard.set(self.mobileNumber, forKey: "phoneNumber")
+                    }
                 }
             } else {
                 if let data = data, let message = String(data: data, encoding: .utf8) {

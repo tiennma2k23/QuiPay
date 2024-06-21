@@ -2,9 +2,9 @@ import SwiftUI
 
 struct SellCoinView: View {
     @State private var amount: String = ""
-    private let currentBalance: Int = 10000
-    private let minAmount: Int = 100
-    private let maxAmount: Int = 1000000
+    @State private var currentBalance: Double = 0.0 // Update to Double to match the saved balance type
+    private let minAmount: Int = 0
+    private let maxAmount: Int = 100
     
     var body: some View {
         VStack {
@@ -41,12 +41,12 @@ struct SellCoinView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
             
-            Text("Min ₹\(minAmount) - Max ₹\(maxAmount)")
+            Text("Min \(minAmount) - Max \(maxAmount)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding(.top, 5)
             
-            Text("Current Balance: \(currentBalance)")
+            Text("Current Balance: \(currentBalance, specifier: "%.2f") SOL")
                 .font(.headline)
                 .padding(.top, 10)
             
@@ -54,7 +54,7 @@ struct SellCoinView: View {
                 HStack(spacing: 20) {
                     ForEach([0, 10, 25], id: \.self) { percentage in
                         Button(action: {
-                            let calculatedAmount = currentBalance * percentage / 100
+                            let calculatedAmount = currentBalance * Double(percentage) / 100
                             amount = "\(calculatedAmount)"
                         }) {
                             Text("\(percentage) %")
@@ -69,7 +69,7 @@ struct SellCoinView: View {
                 HStack(spacing: 20) {
                     ForEach([50, 75, 100], id: \.self) { percentage in
                         Button(action: {
-                            let calculatedAmount = currentBalance * percentage / 100
+                            let calculatedAmount = currentBalance * Double(percentage) / 100
                             amount = "\(calculatedAmount)"
                         }) {
                             Text("\(percentage) %")
@@ -98,6 +98,11 @@ struct SellCoinView: View {
             .padding(.horizontal)
         }
         .padding()
+        .onAppear {
+            if let savedBalance = UserDefaults.standard.value(forKey: "SOLTotalBalance") as? Double {
+                self.currentBalance = savedBalance
+            }
+        }
     }
 }
 

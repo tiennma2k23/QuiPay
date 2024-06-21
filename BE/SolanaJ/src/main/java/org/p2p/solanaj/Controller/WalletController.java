@@ -19,7 +19,7 @@ public class WalletController {
     @GetMapping("/create")
     public String createNewAccount() {
         Account account = walletService.createNewAccount();
-        return "Private Key: " + Base58.encode(account.getSecretKey()) + "\nPublic Key: " + account.getPublicKey().toBase58();
+        return String.valueOf(account.getPublicKey());
     }
 
     @GetMapping("/all")

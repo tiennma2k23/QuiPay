@@ -2,9 +2,9 @@ import SwiftUI
 
 struct BuyCoinView: View {
     @State private var amount: String = ""
-    private let currentBalance: Int = 10000
-    private let minAmount: Int = 100
-    private let maxAmount: Int = 1000000
+    @State private var currentBalance: Double = 0.0 // Update to Double to match the saved balance type
+    private let minAmount: Int = 0
+    private let maxAmount: Int = 1000
     
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct BuyCoinView: View {
             
             Spacer()
             
-            Text("Enter Amount in INR")
+            Text("Enter Amount")
                 .font(.headline)
             
             TextField("0", text: $amount)
@@ -41,47 +41,14 @@ struct BuyCoinView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
             
-            Text("Min ₹\(minAmount) - Max ₹\(maxAmount)")
+            Text("Min \(minAmount) - Max \(maxAmount)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding(.top, 5)
             
-            Text("Current Balance: \(currentBalance)")
+            Text("Current Balance: \(currentBalance, specifier: "%.2f") SOL")
                 .font(.headline)
                 .padding(.top, 10)
-            
-            VStack(spacing: 10) {
-                HStack(spacing: 20) {
-                    ForEach([0, 10, 25], id: \.self) { percentage in
-                        Button(action: {
-                            let calculatedAmount = currentBalance * percentage / 100
-                            amount = "\(calculatedAmount)"
-                        }) {
-                            Text("\(percentage) %")
-                                .padding()
-                                .frame(minWidth: 50)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                        }
-                    }
-                }
-                
-                HStack(spacing: 20) {
-                    ForEach([50, 75, 100], id: \.self) { percentage in
-                        Button(action: {
-                            let calculatedAmount = currentBalance * percentage / 100
-                            amount = "\(calculatedAmount)"
-                        }) {
-                            Text("\(percentage) %")
-                                .padding()
-                                .frame(minWidth: 50)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                        }
-                    }
-                }
-            }
-            .padding(.top, 20)
             
             Spacer()
             
@@ -98,6 +65,11 @@ struct BuyCoinView: View {
             .padding(.horizontal)
         }
         .padding()
+        .onAppear {
+            if let savedBalance = UserDefaults.standard.value(forKey: "SOLTotalBalance") as? Double {
+                self.currentBalance = savedBalance
+            }
+        }
     }
 }
 

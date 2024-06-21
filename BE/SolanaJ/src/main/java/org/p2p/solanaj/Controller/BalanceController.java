@@ -22,7 +22,7 @@ public class BalanceController {
     public String getBalance(@RequestParam String publicKey) {
         try {
             long balance = walletService.getBalance(publicKey);
-            return "Balance: " + balance + " lamports";
+            return String.valueOf(balance);
         } catch (RpcException e) {
             return "Error retrieving balance: " + e.getMessage();
         }

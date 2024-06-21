@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct PayView: View {
-    @State private var amount: String = "100,000"
-    @State private var accountName: String = "Ademola Michael"
-    @State private var accountNumber: String = "0000000000"
+    @State private var amount: String = "10000"
+    @State private var accountName: String = "Test 1"
+    @State private var accountNumber: String = "0123456786"
     @State private var transferID: String = "EA1991111"
+    @State private var navigateToSuccess: Bool = false
     
     var body: some View {
         VStack {
@@ -36,7 +37,7 @@ struct PayView: View {
                 HStack {
                     Spacer()
                     
-                    Text("₦\(amount)")
+                    Text("\(amount)")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
@@ -114,6 +115,16 @@ struct PayView: View {
             Spacer()
         }
         .padding()
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
+                navigateToSuccess = true
+            }
+        }
+        .background(
+            NavigationLink(destination: SuccessPaymentView(), isActive: $navigateToSuccess) {
+                EmptyView()
+            }
+        )
     }
 }
 
