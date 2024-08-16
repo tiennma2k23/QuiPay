@@ -23,7 +23,7 @@ public class WalletService {
     private final Map<String, Account> walletStore;
 
     public WalletService() {
-        this.rpcClient = new RpcClient(Cluster.MAINNET);
+        this.rpcClient = new RpcClient(Cluster.DEVNET);
         this.walletStore = new HashMap<>();
     }
 
