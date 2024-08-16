@@ -211,7 +211,9 @@ struct HomeScreen: View {
                         HStack {
                             ServiceIcon(imageName: "car", text: "Vehicle")
                             ServiceIcon(imageName: "house", text: "Rent Bill")
-                            ServiceIcon(imageName: "chart.bar", text: "Invest")
+                            NavigationLink(destination: PhoneCardPurchaseView()) { // Thay đổi NavigationLink
+                                        ServiceIcon(imageName: "plus.circle", text: "Topup Mobile")
+                                    }
                             ServiceIcon(imageName: "ellipsis", text: "More")
                         }
                     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77727C332C6E54EF000DD826 /* PhoneCardPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77727C322C6E54EF000DD826 /* PhoneCardPurchaseView.swift */; };
 		77B305112C190773003E7C82 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305102C190773003E7C82 /* DataModel.swift */; };
 		77B305132C1907BC003E7C82 /* TransSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305122C1907BC003E7C82 /* TransSampleData.swift */; };
 		77B305152C1907DD003E7C82 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B305142C1907DD003E7C82 /* TransactionView.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77727C322C6E54EF000DD826 /* PhoneCardPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCardPurchaseView.swift; sourceTree = "<group>"; };
 		77B305102C190773003E7C82 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		77B305122C1907BC003E7C82 /* TransSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransSampleData.swift; sourceTree = "<group>"; };
 		77B305142C1907DD003E7C82 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				77B305242C1921BC003E7C82 /* BuyView.swift */,
 				77B305262C192204003E7C82 /* PayView.swift */,
 				77B305282C192761003E7C82 /* PaymentConfirmationView.swift */,
+				77727C322C6E54EF000DD826 /* PhoneCardPurchaseView.swift */,
 				77B305362C1B934A003E7C82 /* LocalStorage.swift */,
 				77B3053A2C1C8529003E7C82 /* SuccessPaymentView.swift */,
 				77B305322C19A8CB003E7C82 /* LoginView.swift */,
@@ -215,6 +218,7 @@
 				77B3052D2C193549003E7C82 /* TradingView.swift in Sources */,
 				77B305252C1921BC003E7C82 /* BuyView.swift in Sources */,
 				77B3051D2C190E88003E7C82 /* CryptoWalletView.swift in Sources */,
+				77727C332C6E54EF000DD826 /* PhoneCardPurchaseView.swift in Sources */,
 				77B305272C192204003E7C82 /* PayView.swift in Sources */,
 				77B3053B2C1C8529003E7C82 /* SuccessPaymentView.swift in Sources */,
 				77B3052B2C19351D003E7C82 /* CryptoService.swift in Sources */,

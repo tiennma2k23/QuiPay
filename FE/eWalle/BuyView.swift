@@ -149,13 +149,13 @@ struct BuyView: View {
         var mobileRequest = URLRequest(url: mobileTransferURL)
         mobileRequest.httpMethod = "POST"
         
-        let solanaTransactionURL = URL(string: "http://localhost:9191/api/solana/transaction/send")!
+        let solanaTransactionURL = URL(string: "http://localhost:9191/api/solana/transaction/send?fromPublicKey=Bfyyj59m5npE1iQF5TijFxhoigD6vxqiEzQ5RBUJmidS&toPublicKey=EfDRKA1ZWPjn2YgU9gvZCGwhkfZ2DdNFbYxMqoMGjn8p&lamports=500000000")!
         var solanaRequest = URLRequest(url: solanaTransactionURL)
         solanaRequest.httpMethod = "POST"
         solanaRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let solanaBody: [String: Any] = [
-            "fromPublicKey": "2wZ2pccPEajLetuLm48sDo14SFLWvLVCMBgR7MZbyRZF",
-            "toPublicKey": "4BUxpp5vWqgt7j23Wcg2xpBaTzF6XoZednn3fURrt1yS",
+            "fromPublicKey": "Bfyyj59m5npE1iQF5TijFxhoigD6vxqiEzQ5RBUJmidS",
+            "toPublicKey": "EfDRKA1ZWPjn2YgU9gvZCGwhkfZ2DdNFbYxMqoMGjn8p",
             "lamports": 500000000
         ]
         solanaRequest.httpBody = try? JSONSerialization.data(withJSONObject: solanaBody, options: [])
